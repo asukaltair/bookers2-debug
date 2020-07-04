@@ -9,5 +9,8 @@ class User < ApplicationRecord
   validates :introduction, length: {maximum: 50}
 
   has_many :books, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :post_comments, dependent: :destroy
+
   attachment :profile_image, destroy: false
 end

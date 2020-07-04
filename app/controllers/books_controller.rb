@@ -6,6 +6,7 @@ class BooksController < ApplicationController
     @user = User.find(current_user.id)
     @book = Book.find(params[:id])
     @newbook = Book.new
+    @post_comment = PostComment.new
   end
 
   def index
