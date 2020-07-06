@@ -1,0 +1,49 @@
+<div class="container">
+	<div class="row">
+
+		<div class="col-xs-12">
+
+			<h2>Books search for '<%= @content %>'</h2>
+			<table class="table table-hover table-inverse">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Title</th>
+						<th>Opinion</th>
+						<th colspan="3"></th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<% @datas.each do |data| %>
+					<tr>
+						<td>
+							<%= link_to user_path(data.user) do %>
+								<%= attachment_image_tag(data.user, :profile_image, :fill, 50, 50, fallback: "no-image-mini.jpg") %>
+							<% end %>
+						</td>
+						<td><%= link_to data.title, book_path(data) %></td>
+						<td><%= data.body %></td>
+						<% if data.favorited_by?(current_user) %>
+							<td>
+								<%= link_to book_favorites_path(data), method: :delete do %>
+									<i class="fa fa-heart" aria-hidden="true" style="color: gray;"></i>
+									<%= data.favorites.count %>
+								<% end %>
+							</td>
+						<% else %>
+							<td>
+								<%= link_to book_favorites_path(data), method: :post do %>
+									<i class="fa fa-heart" aria-hidden="true"></i>
+									<%= data.favorites.count %>
+								<% end %>
+							</td>
+						<% end %>
+						<td>コメント数：<%= data.post_comments.count %></td>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

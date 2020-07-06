@@ -1,0 +1,29 @@
+<div class="container">
+	<div class="row">
+
+		<div class="col-xs-12">
+
+			<h2>Users search for '<%= @content %>'</h2>
+			<!--users一覧 -->
+			<table class="table">
+				<thead>
+					<tr>
+						<th>image</th>
+						<th>name</th>
+						<th colspan="3"></th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<% @datas.each do |data| %>
+					<tr>
+						<td><%= attachment_image_tag(data, :profile_image, :fill, 50, 50, fallback: "no-image-mini.jpg") %></td>
+						<td><%= data.name %></td>
+						<td><%= link_to "Show", user_path(data) %></td>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

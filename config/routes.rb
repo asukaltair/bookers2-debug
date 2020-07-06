@@ -13,6 +13,10 @@ Rails.application.routes.draw do
   get 'users/:id/follows' => 'relationships#follows', as: 'follows'
   get 'users/:id/followers' => 'relationships#followers', as: 'followers'
 
+  get 'search' => 'search#search'
+  get 'search/users' => 'search#users'
+  get 'search/books' => 'search#books'
+
   resources :books do
   	resource :favorites, only: [:create, :destroy]
   	resources :post_comments, only: [:create, :destroy]
