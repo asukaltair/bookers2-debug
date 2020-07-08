@@ -28,21 +28,9 @@
 					</td>
 					<td><%= @book.body %></td>
 
-					<% if @book.favorited_by?(current_user) %>
-						<td>
-							<%= link_to book_favorites_path(@book), method: :delete do %>
-								<i class="fa fa-heart" aria-hidden="true" style="color: gray;"></i>
-								<%= @book.favorites.count %>
-							<% end %>
-						</td>
-					<% else %>
-						<td>
-							<%= link_to book_favorites_path(@book), method: :post do %>
-								<i class="fa fa-heart" aria-hidden="true"></i>
-								<%= @book.favorites.count %>
-							<% end %>
-						</td>
-					<% end %>
+					<td class="favorite-book-<%= @book.id %>">
+						<%= render 'books/favorite', book: @book %>
+					</td>
 
 					<td>コメント数：<%= @book.post_comments.count %></td>
 
@@ -53,27 +41,11 @@
 				</tr>
 			</table>
 
-			<table>
-				<% @book.post_comments.each do |post_comment| %>
-					<tr>
-						<td>
-							<%= attachment_image_tag(post_comment.user, :profile_image, :fill, 100, 100, fallback: "no-image-mini.jpg") %><br>
-							<%= post_comment.user.name %>
-						</td>
-						<td><%= post_comment.comment %></td>
-						<td>
-						<% if post_comment.user == current_user %>
-							<%= link_to 'Destroy', book_post_comment_path(@book, post_comment), method: :delete, class: "btn btn-danger" %>
-						<% end %>
-						</td>
-					</tr>
-				<% end %>
-			</table>
+			<div id="comment-area">
+				<%= render partial: 'post_comments/index', locals: { post_comments: @post_comments } %>
+			</div>
 
-			<%= form_for [@book, @post_comment] do |f| %>
-				<%= f.text_area :comment %>
-				<%= f.submit '送信' %>
-			<% end %>
+				<%= render partial: 'post_comments/form', locals: { comment: @post_comment, book: @book } %>
 
 
 		</div>
